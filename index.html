@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>[Company Name] — Gift Catalog</title>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --surface: #ffffff;
+    --border: #e5e4e1;
+    --text: #2b2b29;
+    --text-muted: #6f6e6a;
+    --accent: #7a8c7a;
+    --accent-dark: #5f6f5f;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  header.site-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .wordmark {
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--text);
+  }
+
+  .header-tag {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  .catalog-intro {
+    margin-bottom: 32px;
+  }
+
+  .catalog-intro h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+
+  .catalog-intro p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+  }
+
+  .product-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    text-align: left;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+    font: inherit;
+    color: inherit;
+  }
+
+  .product-card:hover,
+  .product-card:focus-visible {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    outline: none;
+  }
+
+  .product-card .thumb {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: #f2f1ee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .product-card .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-card .card-name {
+    padding: 14px 16px 16px;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  /* Detail view */
+  .detail-view {
+    display: none;
+  }
+
+  .detail-view.active {
+    display: block;
+  }
+
+  .catalog-view.hidden {
+    display: none;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 28px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: inherit;
+  }
+
+  .back-link:hover {
+    color: var(--accent-dark);
+  }
+
+  .product-detail {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 48px;
+    align-items: start;
+  }
+
+  .gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .gallery-main {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: #f2f1ee;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gallery-main img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .thumb-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .thumb-row button {
+    width: 72px;
+    height: 72px;
+    padding: 0;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    background: #f2f1ee;
+    overflow: hidden;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: border-color 0.15s ease;
+  }
+
+  .thumb-row button img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .thumb-row button.active {
+    border-color: var(--accent);
+  }
+
+  .thumb-row button:hover {
+    border-color: var(--accent-dark);
+  }
+
+  .detail-info h2 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+
+  .detail-info .detail-sub {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin: 0 0 20px;
+  }
+
+  .temu-link {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent-dark);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px;
+  }
+
+  .temu-link.visible {
+    display: inline-flex;
+  }
+
+  .temu-link:hover {
+    border-color: var(--accent);
+    background: #f2f1ee;
+  }
+
+  @media (max-width: 720px) {
+    .product-detail {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    header.site-header {
+      padding: 16px 20px;
+    }
+    main {
+      padding: 28px 16px 60px;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <header class="site-header">
+    <span class="wordmark">[Company Name]</span>
+    <span class="header-tag">Corporate Gift Catalog</span>
+  </header>
+
+  <main>
+    <section class="catalog-view" id="catalogView">
+      <div class="catalog-intro">
+        <h1>Gift Catalog</h1>
+        <p>Browse available items. Select a product to view details.</p>
+      </div>
+      <div class="product-grid" id="productGrid"></div>
+    </section>
+
+    <section class="detail-view" id="detailView">
+      <button class="back-link" id="backLink">&larr; Back to catalog</button>
+      <div class="product-detail">
+        <div class="gallery">
+          <div class="gallery-main">
+            <img id="mainImage" src="" alt="" />
+          </div>
+          <div class="thumb-row" id="thumbRow"></div>
+        </div>
+        <div class="detail-info">
+          <h2 id="detailName"></h2>
+          <p class="detail-sub">Product gallery — tap a thumbnail to preview a different view.</p>
+          <a id="temuLink" class="temu-link" href="#" target="_blank" rel="noopener noreferrer">Go to Temu &rarr;</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const products = [
+      { id: "canvas-tote-bag", name: "Canvas Tote Bag", image: "images/canvas-tote-bag.jpg", temuUrl: "https://www.temu.com/pt-en/1pc-helping--grow-slogan-print-womens-tote-bag-fashionable--simple-vintage-design-minimalist-commuter-shopping-bag-portable-versatile-handbag-for-school-or-work-large-capacity-tote-g-606548231294524.html" },
+      { id: "notebook-gift-box-set", name: "Notebook & Gift Box Set", image: "images/notebook-gift-box-set.jpg", temuUrl: "https://www.temu.com/pt-en/personalized-a5-loose-leaf-notebook-and-gift-box-set--business-notebook-custom-corporate-notebook-with-logo-printing--business-gift-box-set-for-friends-holiday-gift--feel-gift-g-605823136814272.html" },
+      { id: "bamboo-pen", name: "Bamboo Stylus Pen", image: "images/bamboo-pen.jpg", temuUrl: "https://www.temu.com/pt-en/3pcs--screen--pen--ball-pen-neutral-pen-student-supplies-pen-holder--creation-black--width-1-0mm-can-replace--refill-g-601099601758844.html" },
+      { id: "forklift-phone-stand", name: "Forklift Phone Stand", image: "images/forklift-phone-stand.jpg", temuUrl: "https://www.temu.com/pt-en/1-forklift-shaped-phone-stand-3d-printed-design-durable--material-stable-desktop-holder-for--phone-models-home-office-decor-piece-ideal-for-comfortable-viewing---entertainment-g-606054108784925.html" },
+      { id: "fringe-scarf", name: "Fringe Wool Scarf", image: "images/fringe-scarf.jpg", temuUrl: "https://www.temu.com/pt-en/-100-wool-scarf-62-99-7-87-inches-winter-warm-and-windproof-scarf-elegant-fashionable-stretchable-multi-functional--and-leisure-dressing-g-601105369822045.html" },
+      { id: "ceramic-mug", name: "Ceramic Mug", image: "images/ceramic-mug.jpg", temuUrl: "https://www.temu.com/pt-en/im--cup-mug-gifts-for-men-women-g-601099653560588.html" },
+      { id: "travel-umbrella", name: "Compact Travel Umbrella", image: "images/travel-umbrella.jpg", temuUrl: "https://www.temu.com/pt-en/automatic-open-and-close-folding-umbrella--with-ergonomic-handle-8-steel-ribs-portable-and-durable-folding-umbrella-for-outdoor-use-mens-business-sturdy-and-windproof-sunshade-womens-dual-use-sunshade-womens-gift-g-601103435352166.html" },
+      { id: "cotton-tote-bag", name: "Cotton Tote Bag", image: "images/cotton-tote-bag.jpg", temuUrl: "https://www.temu.com/pt-en/3pcs-fashionable-tote-bags-plain-canvas-bags-large-capacity-multi-functional-single-shoulder-shopping-bags-and-easy-single-shoulder-canvas-bags-g-606506707746053.html" },
+      { id: "desk-calendar", name: "Desk Calendar", image: "images/desk-calendar.jpg", temuUrl: "https://www.temu.com/pt-en/desk-calendar-2027-monthly-mini-desktop-calendar-standing-2027-desk-calendar-250-gsm-thick-paper-desktop-calendar-for-home-office-g-607003883740632.html" },
+      { id: "aroma-humidifier", name: "Aroma Diffuser Humidifier", image: "images/aroma-humidifier.jpg", temuUrl: "https://www.temu.com/pt-en/2-pack-mini-silent-humidifier-ow-ambient--portable-large-mist-volume-moisturizing-spy-home--desktop-g-606127811039269.html" },
+      { id: "key-holder", name: "Wall Key Holder", image: "images/key-holder.jpg", temuUrl: "https://www.temu.com/pt-en/-metal-forest-key-hook-wall-mounted--ideal-for-towels-hats-wallets-stylish-entryway-bathroom-decor-storage-with-mountain-and--entryway-organizer-contemporary-design-durable-metal-construction-key-holder-for-wall--g-601100960574132.html" },
+      { id: "laptop-sleeve", name: "Laptop Sleeve", image: "images/laptop-sleeve.jpg", temuUrl: "https://www.temu.com/pt-en/2d-flat-1pc-physics-formula-blackboard-printed-laptop-bag-hand-drawn-physics--pattern-lightweight-and-shockproof-computer-protection-case-creative-pattern-zippered-pouch-fits-multiple-laptop-sizes-g-606827991431648.html" },
+      { id: "metal-pen", name: "Metal Ballpoint Pen", image: "images/metal-pen.jpg", temuUrl: "https://www.temu.com/pt-en/1pc--series-ballpoint-pen-exquisitely-designed-0-5mm-black-refill-ballpoint-pen-suitable-for-men-and--office-use--diaries-signature-pen-g-601101810775414.html" },
+      { id: "hardcover-notebook", name: "Hardcover Notebook", image: "images/hardcover-notebook.jpg", temuUrl: "https://www.temu.com/pt-en/lined-journal-notebook-a5-college-ruled-notebooks-for-work-hardcover-notebook-each-with-pockets-pen-leather-journal-for-women-men-160-pages-100gsm-thick-paper-g-601103392425676.html" },
+      { id: "leather-padfolio", name: "Leather Padfolio", image: "images/leather-padfolio.jpg", temuUrl: "https://www.temu.com/pt-en/-genuine-leather-journal-cover-for--cowhide-multifunctional-organizer-with-pen-loop-business-card-holder-3-5-x5-5-pocket-for-notebooks-office-daily-use-g-601100261219610.html" },
+      { id: "quarter-zip-pullover", name: "Quarter-Zip Pullover", image: "images/quarter-zip-pullover.jpg", temuUrl: "https://www.temu.com/pt-en/tang-yunshus--vintage-style-mens-casual-sporty-cable-knit-lapel-quarter-zip-sweatshirt-for-outdoor-sports-spring-autumn-wear-travel-and-vacation-comfortable-sweatshirt-g-606079157141815.html" },
+      { id: "rain-poncho", name: "Rain Poncho", image: "images/rain-poncho.jpg", temuUrl: "https://www.temu.com/pt-en/rain-poncho-waterproof-raincoat-jacket-for-men-women---hooded-rain-poncho-for--with-pocket-g-605925612063870.html" },
+      { id: "dumpling-night-light", name: "Dumpling Night Light", image: "images/dumpling-night-light.jpg" },
+      { id: "steel-water-bottle", name: "Stainless Steel Water Bottle", image: "images/steel-water-bottle.jpg" },
+      { id: "stress-ball", name: "Stress Ball", image: "images/stress-ball.jpg" },
+      { id: "travel-tumbler", name: "Travel Coffee Tumbler", image: "images/travel-tumbler.jpg" },
+    ];
+
+    const THUMB_COUNT = 4;
+
+    const productGrid = document.getElementById("productGrid");
+    const catalogView = document.getElementById("catalogView");
+    const detailView = document.getElementById("detailView");
+    const mainImage = document.getElementById("mainImage");
+    const thumbRow = document.getElementById("thumbRow");
+    const detailName = document.getElementById("detailName");
+    const backLink = document.getElementById("backLink");
+    const temuLink = document.getElementById("temuLink");
+
+    function renderCatalog() {
+      productGrid.innerHTML = "";
+      products.forEach((product) => {
+        const card = document.createElement("button");
+        card.className = "product-card";
+        card.type = "button";
+        card.innerHTML = `
+          <span class="thumb"><img src="${product.image}" alt="${product.name}" /></span>
+          <span class="card-name">${product.name}</span>
+        `;
+        card.addEventListener("click", () => {
+          window.location.hash = `product/${product.id}`;
+        });
+        productGrid.appendChild(card);
+      });
+    }
+
+    function renderDetail(product) {
+      detailName.textContent = product.name;
+      mainImage.src = product.image;
+      mainImage.alt = product.name;
+
+      if (product.temuUrl) {
+        temuLink.href = product.temuUrl;
+        temuLink.classList.add("visible");
+      } else {
+        temuLink.classList.remove("visible");
+      }
+
+      thumbRow.innerHTML = "";
+      for (let i = 0; i < THUMB_COUNT; i++) {
+        const thumbBtn = document.createElement("button");
+        thumbBtn.type = "button";
+        thumbBtn.className = i === 0 ? "active" : "";
+        thumbBtn.innerHTML = `<img src="${product.image}" alt="${product.name} view ${i + 1}" />`;
+        thumbBtn.addEventListener("click", () => {
+          mainImage.src = product.image;
+          thumbRow.querySelectorAll("button").forEach((b) => b.classList.remove("active"));
+          thumbBtn.classList.add("active");
+        });
+        thumbRow.appendChild(thumbBtn);
+      }
+    }
+
+    function showCatalog() {
+      catalogView.classList.remove("hidden");
+      detailView.classList.remove("active");
+    }
+
+    function showDetail(id) {
+      const product = products.find((p) => p.id === id);
+      if (!product) {
+        showCatalog();
+        return;
+      }
+      renderDetail(product);
+      catalogView.classList.add("hidden");
+      detailView.classList.add("active");
+      window.scrollTo(0, 0);
+    }
+
+    function route() {
+      const hash = window.location.hash.replace(/^#\/?/, "");
+      if (hash.startsWith("product/")) {
+        showDetail(hash.replace("product/", ""));
+      } else {
+        showCatalog();
+      }
+    }
+
+    backLink.addEventListener("click", () => {
+      window.location.hash = "";
+    });
+
+    window.addEventListener("hashchange", route);
+
+    renderCatalog();
+    route();
+  </script>
+
+</body>
+</html>
