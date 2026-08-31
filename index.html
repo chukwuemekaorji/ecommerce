@@ -49,25 +49,6 @@
     width: auto;
   }
 
-  img.watermark {
-    position: absolute;
-    bottom: 8px;
-    right: 8px;
-    width: auto;
-    height: 22px;
-    opacity: 0.92;
-    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
-    pointer-events: none;
-  }
-
-  .gallery-main img.watermark {
-    width: auto;
-    height: 34px;
-    bottom: 14px;
-    right: 14px;
-    object-fit: contain;
-  }
-
   .header-tag {
     font-size: 0.85rem;
     color: var(--text-muted);
@@ -139,12 +120,6 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
-
-  .product-card .thumb img.watermark {
-    width: auto;
-    height: 22px;
-    object-fit: contain;
   }
 
   .product-card .card-name {
@@ -321,7 +296,6 @@
         <div class="gallery">
           <div class="gallery-main">
             <img id="mainImage" src="" alt="" />
-            <img class="watermark" src="images/logo-icon.png" alt="" />
           </div>
           <div class="thumb-row" id="thumbRow"></div>
         </div>
@@ -379,7 +353,6 @@
         card.innerHTML = `
           <span class="thumb">
             <img src="${product.image}" alt="${product.name}" />
-            <img class="watermark" src="images/logo-icon.png" alt="" />
           </span>
           <span class="card-name">${product.name}</span>
         `;
