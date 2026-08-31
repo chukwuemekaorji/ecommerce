@@ -43,6 +43,31 @@
     color: var(--text);
   }
 
+  .wordmark img {
+    display: block;
+    height: 34px;
+    width: auto;
+  }
+
+  img.watermark {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    width: auto;
+    height: 22px;
+    opacity: 0.92;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
+    pointer-events: none;
+  }
+
+  .gallery-main img.watermark {
+    width: auto;
+    height: 34px;
+    bottom: 14px;
+    right: 14px;
+    object-fit: contain;
+  }
+
   .header-tag {
     font-size: 0.85rem;
     color: var(--text-muted);
@@ -100,6 +125,7 @@
   }
 
   .product-card .thumb {
+    position: relative;
     width: 100%;
     aspect-ratio: 1 / 1;
     background: #f2f1ee;
@@ -113,6 +139,12 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  .product-card .thumb img.watermark {
+    width: auto;
+    height: 22px;
+    object-fit: contain;
   }
 
   .product-card .card-name {
@@ -167,6 +199,7 @@
   }
 
   .gallery-main {
+    position: relative;
     width: 100%;
     aspect-ratio: 1 / 1;
     background: #f2f1ee;
@@ -269,7 +302,7 @@
 <body>
 
   <header class="site-header">
-    <span class="wordmark">Nexus Global Business</span>
+    <span class="wordmark"><img src="images/logo-full.png" alt="Nexus Global Business" /></span>
     <span class="header-tag">Corporate Gift Catalog</span>
   </header>
 
@@ -288,6 +321,7 @@
         <div class="gallery">
           <div class="gallery-main">
             <img id="mainImage" src="" alt="" />
+            <img class="watermark" src="images/logo-icon.png" alt="" />
           </div>
           <div class="thumb-row" id="thumbRow"></div>
         </div>
@@ -343,7 +377,10 @@
         card.className = "product-card";
         card.type = "button";
         card.innerHTML = `
-          <span class="thumb"><img src="${product.image}" alt="${product.name}" /></span>
+          <span class="thumb">
+            <img src="${product.image}" alt="${product.name}" />
+            <img class="watermark" src="images/logo-icon.png" alt="" />
+          </span>
           <span class="card-name">${product.name}</span>
         `;
         card.addEventListener("click", () => {
