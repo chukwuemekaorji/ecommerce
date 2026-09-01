@@ -238,28 +238,6 @@
     margin: 0 0 20px;
   }
 
-  .temu-link {
-    display: none;
-    align-items: center;
-    gap: 6px;
-    color: var(--accent-dark);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 10px 16px;
-  }
-
-  .temu-link.visible {
-    display: inline-flex;
-  }
-
-  .temu-link:hover {
-    border-color: var(--accent);
-    background: #f2f1ee;
-  }
-
   @media (max-width: 720px) {
     .product-detail {
       grid-template-columns: 1fr;
@@ -302,7 +280,6 @@
         <div class="detail-info">
           <h2 id="detailName"></h2>
           <p class="detail-sub">Product gallery — tap a thumbnail to preview a different view.</p>
-          <a id="temuLink" class="temu-link" href="#" target="_blank" rel="noopener noreferrer">Go to Temu &rarr;</a>
         </div>
       </div>
     </section>
@@ -310,27 +287,27 @@
 
   <script>
     const products = [
-      { id: "canvas-tote-bag", name: "Canvas Tote Bag", image: "images/canvas-tote-bag.jpg", temuUrl: "https://www.temu.com/pt-en/1pc-helping--grow-slogan-print-womens-tote-bag-fashionable--simple-vintage-design-minimalist-commuter-shopping-bag-portable-versatile-handbag-for-school-or-work-large-capacity-tote-g-606548231294524.html" },
-      { id: "notebook-gift-box-set", name: "Notebook & Gift Box Set", image: "images/notebook-gift-box-set.jpg", temuUrl: "https://www.temu.com/pt-en/personalized-a5-loose-leaf-notebook-and-gift-box-set--business-notebook-custom-corporate-notebook-with-logo-printing--business-gift-box-set-for-friends-holiday-gift--feel-gift-g-605823136814272.html" },
-      { id: "bamboo-pen", name: "Bamboo Stylus Pen", image: "images/bamboo-pen.jpg", temuUrl: "https://www.temu.com/pt-en/3pcs--screen--pen--ball-pen-neutral-pen-student-supplies-pen-holder--creation-black--width-1-0mm-can-replace--refill-g-601099601758844.html" },
-      { id: "forklift-phone-stand", name: "Forklift Phone Stand", image: "images/forklift-phone-stand.jpg", temuUrl: "https://www.temu.com/pt-en/1-forklift-shaped-phone-stand-3d-printed-design-durable--material-stable-desktop-holder-for--phone-models-home-office-decor-piece-ideal-for-comfortable-viewing---entertainment-g-606054108784925.html" },
-      { id: "fringe-scarf", name: "Fringe Wool Scarf", image: "images/fringe-scarf.jpg", temuUrl: "https://www.temu.com/pt-en/-100-wool-scarf-62-99-7-87-inches-winter-warm-and-windproof-scarf-elegant-fashionable-stretchable-multi-functional--and-leisure-dressing-g-601105369822045.html" },
-      { id: "ceramic-mug", name: "Ceramic Mug", image: "images/ceramic-mug.jpg", temuUrl: "https://www.temu.com/pt-en/im--cup-mug-gifts-for-men-women-g-601099653560588.html" },
-      { id: "travel-umbrella", name: "Compact Travel Umbrella", image: "images/travel-umbrella.jpg", temuUrl: "https://www.temu.com/pt-en/automatic-open-and-close-folding-umbrella--with-ergonomic-handle-8-steel-ribs-portable-and-durable-folding-umbrella-for-outdoor-use-mens-business-sturdy-and-windproof-sunshade-womens-dual-use-sunshade-womens-gift-g-601103435352166.html" },
-      { id: "cotton-tote-bag", name: "Cotton Tote Bag", image: "images/cotton-tote-bag.jpg", temuUrl: "https://www.temu.com/pt-en/3pcs-fashionable-tote-bags-plain-canvas-bags-large-capacity-multi-functional-single-shoulder-shopping-bags-and-easy-single-shoulder-canvas-bags-g-606506707746053.html" },
-      { id: "desk-calendar", name: "Desk Calendar", image: "images/desk-calendar.jpg", temuUrl: "https://www.temu.com/pt-en/desk-calendar-2027-monthly-mini-desktop-calendar-standing-2027-desk-calendar-250-gsm-thick-paper-desktop-calendar-for-home-office-g-607003883740632.html" },
-      { id: "aroma-humidifier", name: "Aroma Diffuser Humidifier", image: "images/aroma-humidifier.jpg", temuUrl: "https://www.temu.com/pt-en/2-pack-mini-silent-humidifier-ow-ambient--portable-large-mist-volume-moisturizing-spy-home--desktop-g-606127811039269.html" },
-      { id: "key-holder", name: "Wall Key Holder", image: "images/key-holder.jpg", temuUrl: "https://www.temu.com/pt-en/-metal-forest-key-hook-wall-mounted--ideal-for-towels-hats-wallets-stylish-entryway-bathroom-decor-storage-with-mountain-and--entryway-organizer-contemporary-design-durable-metal-construction-key-holder-for-wall--g-601100960574132.html" },
-      { id: "laptop-sleeve", name: "Laptop Sleeve", image: "images/laptop-sleeve.jpg", temuUrl: "https://www.temu.com/pt-en/senlasi-laptop-bag-compatible-with-blue-black-gray-13-15-6-inch-notebook-laptop-bags-formacbook-ipad---surface-notebook-laptop-briefcases-g-601100066932304.html" },
-      { id: "metal-pen", name: "Metal Ballpoint Pen", image: "images/metal-pen.jpg", temuUrl: "https://www.temu.com/pt-en/1pc--series-ballpoint-pen-exquisitely-designed-0-5mm-black-refill-ballpoint-pen-suitable-for-men-and--office-use--diaries-signature-pen-g-601101810775414.html" },
-      { id: "hardcover-notebook", name: "Hardcover Notebook", image: "images/hardcover-notebook.jpg", temuUrl: "https://www.temu.com/pt-en/lined-journal-notebook-a5-college-ruled-notebooks-for-work-hardcover-notebook-each-with-pockets-pen-leather-journal-for-women-men-160-pages-100gsm-thick-paper-g-601103392425676.html" },
-      { id: "leather-padfolio", name: "Leather Padfolio", image: "images/leather-padfolio.jpg", temuUrl: "https://www.temu.com/pt-en/-genuine-leather-journal-cover-for--cowhide-multifunctional-organizer-with-pen-loop-business-card-holder-3-5-x5-5-pocket-for-notebooks-office-daily-use-g-601100261219610.html" },
-      { id: "quarter-zip-pullover", name: "Quarter-Zip Pullover", image: "images/quarter-zip-pullover.jpg", temuUrl: "https://www.temu.com/pt-en/tang-yunshus--vintage-style-mens-casual-sporty-cable-knit-lapel-quarter-zip-sweatshirt-for-outdoor-sports-spring-autumn-wear-travel-and-vacation-comfortable-sweatshirt-g-606079157141815.html" },
-      { id: "rain-poncho", name: "Rain Poncho", image: "images/rain-poncho.jpg", temuUrl: "https://www.temu.com/pt-en/rain-poncho-waterproof-raincoat-jacket-for-men-women---hooded-rain-poncho-for--with-pocket-g-605925612063870.html" },
-      { id: "steel-water-bottle", name: "Stainless Steel Water Bottle", image: "images/steel-water-bottle.jpg", temuUrl: "https://www.temu.com/pt-en/500ml-high-end-stainless-steel-vacuum-cup-vacuum-insulation--and-cold-leak-proof-portable-unisex-sports-water-cup--portable-kettle--for-home-work-picnic-sports-g-605957002232075.html" },
-      { id: "stress-ball", name: "Stress Ball", image: "images/stress-ball.jpg", temuUrl: "https://www.temu.com/pt-en/texture-pressure-ball-squeeze--multi-colored--of--ball--relax-gift--stress---sensory--for-children-soft-and-slow-recovery-texture--round-ball-squeeze--office-desk-stress-relief-gadget-random-g-605889406808057.html" },
-      { id: "travel-tumbler", name: "Travel Coffee Tumbler", image: "images/travel-tumbler.jpg", temuUrl: "https://www.temu.com/pt-en/40oz--with-a-leak-proof-straw-lid-g-601099582869965.html" },
-      { id: "initials-brooch", name: "Custom Initials Brooch", image: "images/initials-brooch.jpg", temuUrl: "https://www.temu.com/pt-en/custom-initials-brooch-personalized-single-button-stainless-steel-brooch-custom-jewelry-for-suits-and-shirts-unisex-accessory-ideal-for-daily-wear-banquets-and-business-occasions---g-601103187621871.html" },
+      { id: "canvas-tote-bag", name: "Canvas Tote Bag", image: "images/canvas-tote-bag.jpg" },
+      { id: "notebook-gift-box-set", name: "Notebook & Gift Box Set", image: "images/notebook-gift-box-set.jpg" },
+      { id: "bamboo-pen", name: "Bamboo Stylus Pen", image: "images/bamboo-pen.jpg" },
+      { id: "forklift-phone-stand", name: "Forklift Phone Stand", image: "images/forklift-phone-stand.jpg" },
+      { id: "fringe-scarf", name: "Fringe Wool Scarf", image: "images/fringe-scarf.jpg" },
+      { id: "ceramic-mug", name: "Ceramic Mug", image: "images/ceramic-mug.jpg" },
+      { id: "travel-umbrella", name: "Compact Travel Umbrella", image: "images/travel-umbrella.jpg" },
+      { id: "cotton-tote-bag", name: "Cotton Tote Bag", image: "images/cotton-tote-bag.jpg" },
+      { id: "desk-calendar", name: "Desk Calendar", image: "images/desk-calendar.jpg" },
+      { id: "aroma-humidifier", name: "Aroma Diffuser Humidifier", image: "images/aroma-humidifier.jpg" },
+      { id: "key-holder", name: "Wall Key Holder", image: "images/key-holder.jpg" },
+      { id: "laptop-sleeve", name: "Laptop Sleeve", image: "images/laptop-sleeve.jpg" },
+      { id: "metal-pen", name: "Metal Ballpoint Pen", image: "images/metal-pen.jpg" },
+      { id: "hardcover-notebook", name: "Hardcover Notebook", image: "images/hardcover-notebook.jpg" },
+      { id: "leather-padfolio", name: "Leather Padfolio", image: "images/leather-padfolio.jpg" },
+      { id: "quarter-zip-pullover", name: "Quarter-Zip Pullover", image: "images/quarter-zip-pullover.jpg" },
+      { id: "rain-poncho", name: "Rain Poncho", image: "images/rain-poncho.jpg" },
+      { id: "steel-water-bottle", name: "Stainless Steel Water Bottle", image: "images/steel-water-bottle.jpg" },
+      { id: "stress-ball", name: "Stress Ball", image: "images/stress-ball.jpg" },
+      { id: "travel-tumbler", name: "Travel Coffee Tumbler", image: "images/travel-tumbler.jpg" },
+      { id: "initials-brooch", name: "Custom Initials Brooch", image: "images/initials-brooch.jpg" },
     ];
 
     const THUMB_COUNT = 4;
@@ -342,7 +319,6 @@
     const thumbRow = document.getElementById("thumbRow");
     const detailName = document.getElementById("detailName");
     const backLink = document.getElementById("backLink");
-    const temuLink = document.getElementById("temuLink");
 
     function renderCatalog() {
       productGrid.innerHTML = "";
@@ -367,13 +343,6 @@
       detailName.textContent = product.name;
       mainImage.src = product.image;
       mainImage.alt = product.name;
-
-      if (product.temuUrl) {
-        temuLink.href = product.temuUrl;
-        temuLink.classList.add("visible");
-      } else {
-        temuLink.classList.remove("visible");
-      }
 
       thumbRow.innerHTML = "";
       for (let i = 0; i < THUMB_COUNT; i++) {
